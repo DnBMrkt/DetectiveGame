@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0,
+                   maximum-scale=1.0, user-scalable=no">
+
+    <meta name="theme-color" content="#111827">
+
+    <title>CASE FILES #001 — The Missing Student</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         LOADING
+    ====================================================== -->
+
+    <div id="loadingScreen" class="screen active">
+        <div class="loading-box">
+            <div class="loading-icon">🔎</div>
+            <h1>CASE FILES</h1>
+            <p>Preparing investigation...</p>
+
+            <div class="loading-bar">
+                <div id="loadingProgress"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- =====================================================
+         MAIN MENU
+    ====================================================== -->
+
+    <main id="mainMenu" class="screen">
+
+        <div class="brand">
+            <div class="brand-small">CASE FILES</div>
+            <h1>#001</h1>
+            <div class="brand-line"></div>
+            <h2>THE MISSING STUDENT</h2>
+        </div>
+
+        <div class="case-preview">
+
+            <div class="case-icon">
+                🔎
+            </div>
+
+            <div>
+                <span class="case-label">CASE STATUS</span>
+                <strong>UNSOLVED</strong>
+            </div>
+
+        </div>
+
+        <button class="main-button" onclick="startCase()">
+            OPEN CASE
+        </button>
+
+        <button class="secondary-button" onclick="showHowToPlay()">
+            HOW TO PLAY
+        </button>
+
+        <div class="menu-footer">
+            CASE FILES © 2026
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         HOW TO PLAY
+    ====================================================== -->
+
+    <section id="howToPlay" class="screen hidden">
+
+        <div class="topbar">
+            <button class="back-button" onclick="backToMenu()">←</button>
+
+            <div>
+                <span>CASE FILES</span>
+                <strong>HOW TO PLAY</strong>
+            </div>
+        </div>
+
+        <div class="content">
+
+            <div class="info-card">
+                <span>01</span>
+                <h3>INVESTIGATE</h3>
+                <p>
+                    Periksa lokasi dan cari bukti tersembunyi.
+                </p>
+            </div>
+
+            <div class="info-card">
+                <span>02</span>
+                <h3>QUESTION</h3>
+                <p>
+                    Interogasi tersangka dan perhatikan
+                    perubahan pernyataan mereka.
+                </p>
+            </div>
+
+            <div class="info-card">
+                <span>03</span>
+                <h3>CONNECT</h3>
+                <p>
+                    Hubungkan bukti dan temukan kontradiksi.
+                </p>
+            </div>
+
+            <div class="info-card">
+                <span>04</span>
+                <h3>DEDUCE</h3>
+                <p>
+                    Gunakan semua informasi untuk membangun teori.
+                </p>
+            </div>
+
+            <div class="info-card">
+                <span>05</span>
+                <h3>ACCUSATION</h3>
+                <p>
+                    Tentukan siapa yang bertanggung jawab,
+                    kapan kejadian berlangsung, lokasi,
+                    dan motifnya.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CASE INTRO
+    ====================================================== -->
+
+    <section id="caseIntro" class="screen hidden">
+
+        <div class="case-header">
+
+            <span class="case-number">
+                CASE FILE #001
+            </span>
+
+            <h1>THE MISSING STUDENT</h1>
+
+            <div class="classified">
+                CLASSIFIED
+            </div>
+
+        </div>
+
+        <div class="story-card">
+
+            <div class="story-date">
+                MONDAY — 19:47
+            </div>
+
+            <p>
+                Seorang siswa bernama Evan Carter
+                dilaporkan menghilang setelah jam sekolah.
+            </p>
+
+            <p>
+                Kamera keamanan menunjukkan Evan
+                terakhir terlihat memasuki gedung lama
+                pada pukul 18:24.
+            </p>
+
+            <p>
+                Tidak ada yang melihatnya keluar.
+            </p>
+
+            <p>
+                Lima orang memiliki hubungan dengan Evan.
+            </p>
+
+            <p class="story-highlight">
+                Salah satu dari mereka mengetahui
+                lebih banyak daripada yang mereka katakan.
+            </p>
+
+        </div>
+
+        <button class="main-button" onclick="enterInvestigation()">
+            BEGIN INVESTIGATION
+        </button>
+
+    </section>
+
+
+    <!-- =====================================================
+         INVESTIGATION
+    ====================================================== -->
+
+    <section id="investigation" class="screen hidden">
+
+        <!-- TOP BAR -->
+
+        <div class="game-topbar">
+
+            <div class="case-title">
+                <span>CASE #001</span>
+                <strong>THE MISSING STUDENT</strong>
+            </div>
+
+            <div class="case-progress">
+                <span id="evidenceCount">0</span>/12
+                <small>EVIDENCE</small>
+            </div>
+
+        </div>
+
+
+        <!-- LOCATION -->
+
+        <div class="section-heading">
+            <span>INVESTIGATION</span>
+            <h2>Choose Location</h2>
+        </div>
+
+
+        <div class="location-grid">
+
+            <button class="location-card"
+                    onclick="searchLocation('school')">
+
+                <span class="location-icon">🏫</span>
+
+                <strong>School</strong>
+
+                <small>
+                    Main Building
+                </small>
+
+            </button>
+
+
+            <button class="location-card"
+                    onclick="searchLocation('library')">
+
+                <span class="location-icon">📚</span>
+
+                <strong>Library</strong>
+
+                <small>
+                    East Wing
+                </small>
+
+            </button>
+
+
+            <button class="location-card"
+                    onclick="searchLocation('oldBuilding')">
+
+                <span class="location-icon">🏚️</span>
+
+                <strong>Old Building</strong>
+
+                <small>
+                    Restricted
+                </small>
+
+            </button>
+
+
+            <button class="location-card"
+                    onclick="searchLocation('sideGate')">
+
+                <span class="location-icon">🚪</span>
+
+                <strong>Side Gate</strong>
+
+                <small>
+                    East Entrance
+                </small>
+
+            </button>
+
+
+            <button class="location-card"
+                    onclick="searchLocation('field')">
+
+                <span class="location-icon">🏀</span>
+
+                <strong>Field</strong>
+
+                <small>
+                    Sports Area
+                </small>
+
+            </button>
+
+
+            <button class="location-card"
+                    onclick="searchLocation('evanHouse')">
+
+                <span class="location-icon">🏠</span>
+
+                <strong>Evan's House</strong>
+
+                <small>
+                    Residence
+                </small>
+
+            </button>
+
+        </div>
+
+
+        <!-- MAIN TOOLS -->
+
+        <div class="section-heading tools-heading">
+            <span>DETECTIVE TOOLS</span>
+            <h2>Case Files</h2>
+        </div>
+
+
+        <div class="tools-grid">
+
+            <button onclick="openEvidence()">
+                <span>🔎</span>
+                <strong>Evidence</strong>
+                <small id="evidenceToolCount">
+                    0 discovered
+                </small>
+            </button>
+
+
+            <button onclick="openSuspects()">
+                <span>👤</span>
+                <strong>Suspects</strong>
+                <small>5 persons</small>
+            </button>
+
+
+            <button onclick="openTimeline()">
+                <span>🕒</span>
+                <strong>Timeline</strong>
+                <small>Reconstruct</small>
+            </button>
+
+
+            <button onclick="openJournal()">
+                <span>📓</span>
+                <strong>Journal</strong>
+                <small>Case notes</small>
+            </button>
+
+
+            <button onclick="openEvidenceBoard()">
+                <span>🧩</span>
+                <strong>Evidence Board</strong>
+                <small>Connect clues</small>
+            </button>
+
+
+            <button onclick="openDeduction()">
+                <span>🧠</span>
+                <strong>Deduction</strong>
+                <small>Build theory</small>
+            </button>
+
+        </div>
+
+
+        <!-- FINAL ACCUSATION -->
+
+        <div class="accusation-container">
+
+            <button class="accusation-button"
+                    onclick="openAccusation()">
+
+                ⚖️ FINAL ACCUSATION
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         LOCATION SEARCH
+    ====================================================== -->
+
+    <section id="locationScreen" class="screen hidden">
+
+        <div class="topbar">
+
+            <button class="back-button"
+                    onclick="backToInvestigation()">
+                ←
+            </button>
+
+            <div>
+                <span id="locationType">LOCATION</span>
+                <strong id="locationTitle">
+                    SEARCH
+                </strong>
+            </div>
+
+        </div>
+
+
+        <div class="location-description">
+
+            <div id="locationIcon"
+                 class="large-location-icon">
+                🔎
+            </div>
+
+            <p id="locationDescription">
+                Search the area for evidence.
+            </p>
+
+        </div>
+
+
+        <div id="objectsGrid"
+             class="objects-grid">
+
+            <!-- OBJECTS GENERATED BY JAVASCRIPT -->
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         EVIDENCE
+    ====================================================== -->
+
+    <section id="evidenceScreen" class="screen hidden">
+
+        <div class="topbar">
+
+            <button class="back-button"
+                    onclick="backToInvestigation()">
+                ←
+            </button>
+
+            <div>
+                <span>CASE FILE #001</span>
+                <strong>EVIDENCE</strong>
+            </div>
+
+        </div>
+
+
+        <div class="filter-row">
+
+            <button onclick="filterEvidence('all')">
+                ALL
+            </button>
+
+            <button onclick="filterEvidence('physical')">
+                PHYSICAL
+            </button>
+
+            <button onclick="filterEvidence('digital')">
+                DIGITAL
+            </button>
+
+            <button onclick="filterEvidence('statement')">
+                STATEMENT
+            </button>
+
+        </div>
+
+
+        <div id="evidenceList"
+             class="evidence-list">
+
+            <!-- GENERATED -->
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         EVIDENCE DETAIL
+    ====================================================== -->
+
+    <section id="evidenceDetail"
+             class="screen hidden">
+
+        <div class="topbar">
+
+            <button class="back-button"
+                    onclick="backToEvidence()">
+                ←
+            </button>
+
+            <div>
+                <span>EVIDENCE</span>
+                <strong id="detailEvidenceNumber">
+                    #00
+                </strong>
+            </div>
+
+        </div>
+
+
+        <div class="evidence-detail-card">
+
+            <div id="detailEvidenceIcon"
+                 class="detail-icon">
+                🔎
+            </div>
+
+            <span id="detailEvidenceType"
+                  class="evidence-type">
+                PHYSICAL
+            </span>
+
+            <h2 id="detailEvidenceTitle">
+                Evidence
+            </h2>
+
+            <p id="detailEvidenceDescription">
+                Description.
+            </p>
+
+            <div class="evidence-actions">
+
+                <button onclick="inspectEvidence()">
+                    🔎 INSPECT
+                </button>
+
+                <button onclick="compareEvidence()">
+                    ↔️ COMPARE
+                </button>
+
+                <button onclick="noteEvidence()">
+                    📝 NOTE
+                </button>
+
+                <button onclick="connectEvidence()">
+                    🧩 CONNECT
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SUSPECTS
+    ====================================================== -->
+
+    <section id="suspectsScreen"
+             class="screen hidden">
+
+        <div class="topbar">
+
+            <button class="back-button"
+                    onclick="backToInvestigation()">
+                ←
+            </button>
+
+            <div>
+                <span>CASE FILE #001</span>
+                <strong>SUSPECTS</strong>
+            </div>
+
+        </div>
+
+
+        <div id="suspectsList"
+             class="suspects-list">
+
+            <!-- GENERATED -->
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SUSPECT DETAIL
+    ====================================================== -->
+
+    <section id="suspectDetail"
+             class="screen hidden">
+
+        <div class="topbar">
+
+            <button class="back-button"
+                    onclick="backToSuspects()">
+                ←
+            </button>
+
+            <div>
+                <span>SUSPECT</span>
+                <strong id="suspectDetailName">
+                    UNKNOWN
+                </strong>
+            </div>
+
+        </div>
+
+
+        <div class="suspect-profile">
+
+            <div id="suspectAvatar"
+                 class="suspect-avatar">
+                👤
+            </div>
+
+            <h2 id="suspectName">
+                Unknown
+            </h2>
+
+            <span id="suspectRelation">
+                Relationship
+            </span>
+
+            <div class="suspect-status">
+
+                <div>
+                    <small>ALIBI</small>
+                    <strong id="suspectAlibiStatus">
+                        UNKNOWN
+                    </strong>
+                </div>
+
+                <div>
+                    <small>TRUST</small>
+                    <strong id="suspectTrust">
+                        50%
+                    </strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ALIBI -->
+
+        <div class="info-panel">
+
+            <span>ALIBI</span>
+
+            <p id="suspectAlibi">
+                No alibi recorded.
+            </p>
+
+        </div>
+
+
+        <!-- CONTRADICTIONS -->
+
+        <div class="info-panel">
+
+            <span>CONTRADICTIONS</span>
+
+            <div id="suspectContradictions">
+
+                <p class="empty-message">
+                    No contradiction discovered.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- INTERROGATION -->
+
+        <button class="main-button"
+                onclick="startInterrogation()">
+
+            💬 INTERROGATE
+
+        </button>
+
+    </section>
+
+
+    <!-- =====================================================
+         INTERROGATION
+    ====================================================== -->
+
+    <section id="interrogationScreen"
+             class="screen hidden">
+
+        <div class="interrogation-header">
+
+            <button class="back-button"
+                    onclick="backToSuspectDetail()">
+                ←
+            </button>
+
+            <div>
+
+                <span>INTERROGATION</span>
+
+                <strong id="interrogationName">
+                    SUSPECT
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="interrogation-room">
+
+            <div id="interrogationAvatar"
+                 class="interrogation-avatar">
+                👤
+            </div>
+
+            <div class="interrogation-status">
+
+                <span id="reactionLabel">
+                    CALM
+                </span>
+
+                <div class="reaction-bar">
+                    <div id="reactionProgress"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div id="dialogueBox"
+             class="dialogue-box">
+
+            <span id="speakerName">
+                DETECTIVE
+            </span>
+
+            <p id="dialogueText">
+                ...
+            </p>
+
+        </div>
+
+
+        <div id="dialogueChoices"
+             class="dialogue-choices">
+
+            <!-- GENERATED -->
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         TIMELINE
+    ====================================================== -->
+
+    <section id="timelineScreen"
+             class="screen hidden">
+
+        <div class="topbar">
+
+            <button class="back-button"
+                    onclick="backToInvestigation()">
+                ←
+            </button>
+
+            <div>
+                <span>CASE FILE #001</span>
+                <strong>TIMELINE</strong>
+            </div>
+
+        </div>
+
+
+        <div class="timeline-instruction">
+
+            <h2>Reconstruct the Night</h2>
+
+            <p>
+                Susun kejadian berdasarkan informasi
+                yang telah kamu temukan.
+            </p>
+
+        </div>
+
+
+        <div id="timelineItems"
+             class="timeline-items">
+
+            <!-- GENERATED -->
+
+        </div>
+
+
+        <button class="main-button"
+                onclick="checkTimeline()">
+
+            CHECK TIMELINE
+
+        </button>
+
+    </section>
+
+
+    <!-- =====================================================
+         EVIDENCE BOARD
+    ====================================================== -->
+
+    <section id="boardScreen"
+             class="screen hidden">
+
+        <div class="topbar">
+
+            <button class="back-button"
+                    onclick="backToInvestigation()">
+                ←
+            </button>
+
+            <div>
+                <span>CASE FILE #001</span>
+                <strong>EVIDENCE BOARD</strong>
+            </div>
+
+        </div>
+
+
+        <div class="board-instruction">
+
+            <h2>Connect the Evidence</h2>
+
+            <p>
+                Pilih dua bukti yang menurutmu
+                memiliki hubungan.
+            </p>
+
+        </div>
+
+
+        <div id="boardEvidence"
+             class="board-evidence">
+
+            <!-- GENERATED -->
+
+        </div>
+
+
+        <div class="connection-result"
+             id="connectionResult">
+
+            Pilih dua bukti.
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         DEDUCTION
+    ====================================================== -->
+
+    <section id="deductionScreen"
+             class="screen hidden">
+
+        <div class="topbar">
+
+            <button class="back-button"
+                    onclick="backToInvestigation()">
+                ←
+            </button>
+
+            <div>
+                <span>CASE FILE #001</span>
+                <strong>DEDUCTION</strong>
+            </div>
+
+        </div>
+
+
+        <div class="deduction-header">
+
+            <div class="deduction-icon">
+                🧠
+            </div>
+
+            <h2>Build Your Theory</h2>
+
+            <p>
+                Gunakan bukti yang sudah kamu temukan
+                untuk menarik kesimpulan.
+            </p>
+
+        </div>
+
+
+        <div class="deduction-chain">
+
+            <div class="deduction-slot">
+                <span>CLUE A</span>
+                <button onclick="chooseDeduction('a')"
+                        id="deductionA">
+                    +
+                </button>
+            </div>
+
+
+            <div class="deduction-arrow">
+                +
+            </div>
+
+
+            <div class="deduction-slot">
+                <span>CLUE B</span>
+                <button onclick="chooseDeduction('b')"
+                        id="deductionB">
+                    +
+                </button>
+            </div>
+
+
+            <div class="deduction-arrow">
+                →
+            </div>
+
+
+            <div class="deduction-slot conclusion">
+                <span>CONCLUSION</span>
+                <div id="deductionConclusion">
+                    ?
+                </div>
+            </div>
+
+        </div>
+
+
+        <button class="main-button"
+                onclick="submitDeduction()">
+
+            SUBMIT DEDUCTION
+
+        </button>
+
+    </section>
+
+
+    <!-- =====================================================
+         JOURNAL
+    ====================================================== -->
+
+    <section id="journalScreen"
+             class="screen hidden">
+
+        <div class="topbar">
+
+            <button class="back-button"
+                    onclick="backToInvestigation()">
+                ←
+            </button>
+
+            <div>
+                <span>CASE FILE #001</span>
+                <strong>CASE JOURNAL</strong>
+            </div>
+
+        </div>
+
+
+        <div class="journal-tabs">
+
+            <button onclick="showJournalTab('suspects')">
+                SUSPECTS
+            </button>
+
+            <button onclick="showJournalTab('evidence')">
+                EVIDENCE
+            </button>
+
+            <button onclick="showJournalTab('conclusions')">
+                CONCLUSIONS
+            </button>
+
+            <button onclick="showJournalTab('questions')">
+                QUESTIONS
+            </button>
+
+        </div>
+
+
+        <div id="journalContent"
+             class="journal-content">
+
+            <!-- GENERATED -->
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FINAL ACCUSATION
+    ====================================================== -->
+
+    <section id="accusationScreen"
+             class="screen hidden">
+
+        <div class="topbar">
+
+            <button class="back-button"
+                    onclick="backToInvestigation()">
+                ←
+            </button>
+
+            <div>
+                <span>CASE FILE #001</span>
+                <strong>FINAL ACCUSATION</strong>
+            </div>
+
+        </div>
+
+
+        <div class="accusation-header">
+
+            <div class="accusation-icon">
+                ⚖️
+            </div>
+
+            <h2>Make Your Accusation</h2>
+
+            <p>
+                Pastikan semua fakta cocok.
+                Setelah dikirim, keputusan tidak
+                dapat dibatalkan.
+            </p>
+
+        </div>
+
+
+        <!-- WHO -->
+
+        <div class="accusation-field">
+
+            <label>WHO?</label>
+
+            <select id="accusedPerson">
+
+                <option value="">
+                    Select suspect
+                </option>
+
+                <option value="adrian">
+                    Adrian
+                </option>
+
+                <option value="marcus">
+                    Marcus
+                </option>
+
+                <option value="clara">
+                    Clara
+                </option>
+
+                <option value="daniel">
+                    Daniel
+                </option>
+
+                <option value="unknown">
+                    Unknown Suspect
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- WHEN -->
+
+        <div class="accusation-field">
+
+            <label>WHEN?</label>
+
+            <select id="accusedTime">
+
+                <option value="">
+                    Select time
+                </option>
+
+                <option value="1800">
+                    18:00
+                </option>
+
+                <option value="1821">
+                    18:21
+                </option>
+
+                <option value="1824">
+                    18:24
+                </option>
+
+                <option value="1830">
+                    18:30
+                </option>
+
+                <option value="1842">
+                    18:42
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- WHERE -->
+
+        <div class="accusation-field">
+
+            <label>WHERE?</label>
+
+            <select id="accusedLocation">
+
+                <option value="">
+                    Select location
+                </option>
+
+                <option value="school">
+                    School
+                </option>
+
+                <option value="library">
+                    Library
+                </option>
+
+                <option value="oldBuilding">
+                    Old Building
+                </option>
+
+                <option value="sideGate">
+                    Side Gate
+                </option>
+
+                <option value="field">
+                    Field
+                </option>
+
+                <option value="house">
+                    Evan's House
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- MOTIVE -->
+
+        <div class="accusation-field">
+
+            <label>MOTIVE?</label>
+
+            <select id="accusedMotive">
+
+                <option value="">
+                    Select motive
+                </option>
+
+                <option value="revenge">
+                    Revenge
+                </option>
+
+                <option value="money">
+                    Money
+                </option>
+
+                <option value="secret">
+                    Protect a Secret
+                </option>
+
+                <option value="jealousy">
+                    Jealousy
+                </option>
+
+                <option value="unknown">
+                    Unknown
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- MAIN EVIDENCE -->
+
+        <div class="accusation-field">
+
+            <label>MAIN EVIDENCE</label>
+
+            <select id="mainEvidence">
+
+                <option value="">
+                    Select evidence
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button class="accusation-button"
+                onclick="submitAccusation()">
+
+            ⚖️ SUBMIT ACCUSATION
+
+        </button>
+
+    </section>
+
+
+    <!-- =====================================================
+         RESULT
+    ====================================================== -->
+
+    <section id="resultScreen"
+             class="screen hidden">
+
+        <div class="result-container">
+
+            <div id="resultIcon"
+                 class="result-icon">
+                🔎
+            </div>
+
+            <span id="resultLabel">
+                CASE RESULT
+            </span>
+
+            <h1 id="resultTitle">
+                CASE SOLVED
+            </h1>
+
+            <p id="resultDescription">
+                ...
+            </p>
+
+
+            <div class="detective-rating">
+
+                <span>DETECTIVE RATING</span>
+
+                <div id="ratingStars">
+                    ☆☆☆☆☆
+                </div>
+
+            </div>
+
+
+            <div class="result-stats">
+
+                <div>
+                    <strong id="finalEvidence">
+                        0/12
+                    </strong>
+
+                    <span>EVIDENCE</span>
+                </div>
+
+                <div>
+                    <strong id="finalContradictions">
+                        0
+                    </strong>
+
+                    <span>CONTRADICTIONS</span>
+                </div>
+
+                <div>
+                    <strong id="finalSecrets">
+                        0
+                    </strong>
+
+                    <span>SECRETS</span>
+                </div>
+
+            </div>
+
+
+            <div class="next-case">
+
+                <span>NEXT CASE</span>
+
+                <h2>
+                    CASE #002
+                </h2>
+
+                <p>
+                    THE LOCKED ROOM
+                </p>
+
+                <small>
+                    COMING SOON
+                </small>
+
+            </div>
+
+
+            <button class="main-button"
+                    onclick="backToMenu()">
+
+                RETURN TO MENU
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         MODAL
+    ====================================================== -->
+
+    <div id="modal"
+         class="modal hidden">
+
+        <div class="modal-overlay"
+             onclick="closeModal()">
+        </div>
+
+        <div class="modal-content">
+
+            <button class="modal-close"
+                    onclick="closeModal()">
+                ×
+            </button>
+
+            <div id="modalIcon"
+                 class="modal-icon">
+                🔎
+            </div>
+
+            <h2 id="modalTitle">
+                Information
+            </h2>
+
+            <p id="modalText">
+                ...
+            </p>
+
+            <div id="modalActions"
+                 class="modal-actions">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         NOTIFICATION
+    ====================================================== -->
+
+    <div id="notification"
+         class="notification">
+
+        <span id="notificationIcon">
+            🔎
+        </span>
+
+        <p id="notificationText">
+            Evidence discovered.
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         SOUND
+    ====================================================== -->
+
+    <audio id="soundClick"
+           preload="auto">
+    </audio>
+
+    <audio id="soundEvidence"
+           preload="auto">
+    </audio>
+
+    <audio id="soundSuccess"
+           preload="auto">
+    </audio>
+
+    <audio id="soundError"
+           preload="auto">
+    </audio>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="script.js"></script>
+
+</body>
+</html>
